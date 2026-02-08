@@ -53,7 +53,7 @@ export default async function OrderDetailsPage({ params }: PageProps) {
 
   const shippingLine =
     ship.deliveryType === "STOP_DESK"
-      ? `Stop Desk • ${ship.stopDeskId ?? "N/A"}`
+      ? `Stop Desk • ${ship.wilaya ?? "N/A"}`
       : `Home delivery • ${
           [ship.wilaya, ship.baladiya, ship.address]
             .filter(Boolean)
