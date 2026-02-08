@@ -52,8 +52,6 @@ export const shippingAddressSchema = z.discriminatedUnion("deliveryType", [
 
     // ✅ add this
     wilaya: z.string().min(2, "Wilaya is required"),
-
-    stopDeskId: z.string().min(1, "Please select a stop desk"),
   }),
 
   z.object({

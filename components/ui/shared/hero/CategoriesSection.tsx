@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getDerivedCategories } from "@/actions/categories.action";
-
-export const revalidate = 300; // 5 minutes
+import { getLatestCategoryImages } from "@/actions/products.action";
+export const revalidate = 60; // Refresh every minute
 
 export default async function CategoriesSection() {
-  const categories = await getDerivedCategories();
+  const categories = await getLatestCategoryImages();
 
   if (!categories.length) return null;
 

@@ -14,8 +14,8 @@ import { getCartCount } from "@/actions/cart-action";
 const NAV_ITEMS = [
   { label: "Nouveautés", href: "/" },
   { label: "Boutique", href: "/shop" },
-  { label: "Ensembles", href: "/ensembles" },
-  { label: "Contact", href: "/contact" },
+
+  { label: "Contact", href: "https://linktr.ee/mounir16.dz" },
 ];
 
 export default function Menu() {
@@ -72,7 +72,6 @@ export default function Menu() {
                 </nav>
 
                 <div className="mt-8 space-y-4">
-                  <Toggle />
                   <UserButton />
                 </div>
               </SheetContent>
@@ -125,7 +124,6 @@ export default function Menu() {
         {/* ================= RIGHT ================= */}
         <div className="flex items-center gap-2">
           <div className="hidden md:flex items-center gap-2">
-            <Toggle />
             <UserButton />
           </div>
 

@@ -25,7 +25,6 @@ import { saveCartShippingAddress } from "@/actions/cart-action";
 
 import { User, Phone, Home, MapPin, Store } from "lucide-react";
 
-// ✅ NEW: use your wilaya prices map + shipping calculator
 import {
   SHIPPING_RATES_BY_WILAYA,
   getShippingPriceByWilaya,
@@ -42,9 +41,7 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
   const router = useRouter();
 
   const defaultValues = useMemo(() => {
-    if (addresse) {
-      return addresse as ShippingFormData;
-    }
+    if (addresse) return addresse as ShippingFormData;
     return {
       deliveryType: "HOME" as const,
       fullName: "",
@@ -65,7 +62,6 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
   const deliveryType = form.watch("deliveryType");
   const wilaya = form.watch("wilaya");
 
-  // ✅ live shipping preview
   const liveShippingPrice = wilaya
     ? getShippingPriceByWilaya(wilaya, deliveryType)
     : 0;
@@ -125,7 +121,7 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
                     onChange={(e) => field.onChange(e.target.value)}
                   >
                     <option value="HOME">Livraison à domicile</option>
-                    <option value="STOP_DESK">Point relais</option>
+                    <option value="STOP_DESK">Bureau</option>
                   </select>
                 </FormControl>
                 <FormMessage />
@@ -144,7 +140,7 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Jean Dupont"
+                    placeholder="Mounir Belkadi"
                     {...field}
                     className="rounded-xl border shadow-sm hover:shadow-md transition"
                   />
@@ -175,7 +171,7 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
             )}
           />
 
-          {/* ✅ WILAYA (shared for both HOME & STOP_DESK) */}
+          {/* Wilaya */}
           <FormField
             control={form.control}
             name="wilaya"
@@ -203,7 +199,7 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
             )}
           />
 
-          {/* ✅ Live Shipping Preview */}
+          {/* Live Shipping Preview */}
           <div className="rounded-xl border p-4 text-sm flex items-center justify-between">
             <span className="text-muted-foreground">Frais de livraison</span>
             <span className="font-bold text-primary">
@@ -256,32 +252,11 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
             </div>
           )}
 
-          {/* STOP DESK fields */}
+          {/* STOP DESK */}
           {deliveryType === "STOP_DESK" && (
-            <FormField
-              control={form.control}
-              name="stopDeskId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex items-center gap-2">
-                    <Store className="w-4 h-4 text-primary" /> Point relais
-                  </FormLabel>
-                  <FormControl>
-                    <select
-                      className="h-12 w-full rounded-xl border bg-background px-4 text-sm shadow-sm hover:shadow-md transition"
-                      value={field.value}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    >
-                      <option value="">Sélectionner un point relais</option>
-                      <option value="alger-centre">Alger Centre</option>
-                      <option value="oran-centre">Oran Centre</option>
-                      <option value="setif-centre">Sétif Centre</option>
-                    </select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="text-sm text-muted-foreground">
+              <p>Choisissez votre Point relais dans le réseau disponible.</p>
+            </div>
           )}
 
           <Button

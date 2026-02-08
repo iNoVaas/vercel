@@ -190,3 +190,36 @@ export const getLastProduct = cache(async (): Promise<Product | null> => {
 
   return data ? (prismaToJson(data) as Product) : null;
 });
+
+// actions/categories.action.ts
+
+export const getLatestCategoryImages = cache(async () => {
+  // ✅ Fetch all products sorted by newest first
+  const allProducts = await prisma.product.findMany({
+    select: {
+      category: true,
+      images: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: "desc", // Newest first
+    },
+  });
+
+  // ✅ Build categories with LATEST image per category
+  const categoryMap = new Map<string, string>();
+
+  for (const product of allProducts) {
+    const categoryName = product.category.trim();
+
+    // First product per category = newest (because orderBy desc)
+    if (!categoryMap.has(categoryName) && product.images?.[0]) {
+      categoryMap.set(categoryName, product.images[0]);
+    }
+  }
+
+  // ✅ Convert to array and sort alphabetically
+  return Array.from(categoryMap.entries())
+    .map(([name, image]) => ({ name, image }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+});

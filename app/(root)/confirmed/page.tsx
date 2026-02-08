@@ -91,10 +91,10 @@ const ConfirmedPage = async () => {
           <Card>
             <CardHeader className="border-b bg-muted/30">
               <div className="flex items-center justify-between">
-                <CardTitle>Shipping details</CardTitle>
+                <CardTitle>Informations de livraison</CardTitle>
                 <Link href="/shipping-adresse">
                   <Button size="sm" variant="outline">
-                    Edit
+                    Modifier
                   </Button>
                 </Link>
               </div>
@@ -128,9 +128,9 @@ const ConfirmedPage = async () => {
 
                   {validatedAddress.deliveryType === "STOP_DESK" && (
                     <p>
-                      Stop desk ID:{" "}
+                      Bureau:{" "}
                       <span className="font-medium text-foreground">
-                        {validatedAddress.stopDeskId}
+                        {validatedAddress.wilaya}
                       </span>
                     </p>
                   )}
@@ -143,9 +143,9 @@ const ConfirmedPage = async () => {
           <Card>
             <CardHeader className="border-b bg-muted/30">
               <div className="flex items-center justify-between">
-                <CardTitle>Order items</CardTitle>
+                <CardTitle>Articles de la commande</CardTitle>
                 <span className="text-sm text-muted-foreground">
-                  {itemsCount} item{itemsCount > 1 ? "s" : ""}
+                  {itemsCount} Article{itemsCount > 1 ? "s" : ""}
                 </span>
               </div>
             </CardHeader>
@@ -199,7 +199,7 @@ const ConfirmedPage = async () => {
                         DZD {(Number(item.price) * Number(item.qty)).toFixed(2)}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        DZD {Number(item.price).toFixed(2)} each
+                        DZD {Number(item.price).toFixed(2)} l’unité
                       </p>
                     </div>
                   </div>
@@ -213,13 +213,13 @@ const ConfirmedPage = async () => {
         <div className="md:col-span-1">
           <Card className="sticky top-6">
             <CardHeader className="border-b bg-muted/30">
-              <CardTitle>Order summary</CardTitle>
+              <CardTitle>Récapitulatif de la commande</CardTitle>
             </CardHeader>
 
             <CardContent className="space-y-4 p-5">
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Items</span>
+                  <span className="text-muted-foreground">Article</span>
                   <span className="font-medium">
                     DZD {Number(cart.itemsPrice).toFixed(2)}
                   </span>
@@ -227,7 +227,7 @@ const ConfirmedPage = async () => {
 
                 {/* ✅ Use computedShippingPrice instead of cart.shippingPrice */}
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Shipping</span>
+                  <span className="text-muted-foreground">Livraison</span>
                   <span className="font-medium">
                     DZD {Number(computedShippingPrice).toFixed(2)}
                   </span>
