@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import ProductImages from "@/components/ui/shared/products/product-images";
 import AddCart from "@/components/ui/shared/products/add-cart";
 import { Cart, Product } from "@/types";
 import { cn } from "@/lib/utils";
+import * as pixel from "@/lib/pixel";
 
 type ProductDetailsClientProps = {
   product: Product;
@@ -14,6 +15,17 @@ type ProductDetailsClientProps = {
 };
 
 const ProductDetailsClient = ({ product, cart }: ProductDetailsClientProps) => {
+  /* ---------------- TRACK VIEW CONTENT ---------------- */
+  useEffect(() => {
+    pixel.event("ViewContent", {
+      content_name: product.name,
+      content_ids: [product.id],
+      content_type: "product",
+      value: product.price,
+      currency: "DZD",
+    });
+  }, [product]);
+
   /* ---------------- PARSE TAILLES ---------------- */
   const tailles: string[] = (() => {
     if (!product.taille) return [];

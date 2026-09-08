@@ -7,6 +7,7 @@ import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 import { addItemToCart, removeItemFromCart } from "@/actions/cart-action";
 import { useRouter } from "next/navigation";
+import * as pixel from "@/lib/pixel";
 
 const AddCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
   const router = useRouter();
@@ -34,6 +35,15 @@ const AddCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
       if (result?.success) {
         // ✅ UPDATE NAVBAR BADGE INSTANTLY
         window.dispatchEvent(new Event("cart:updated"));
+
+        // Track AddToCart event for Meta Pixel
+        pixel.event("AddToCart", {
+          content_name: item.name,
+          content_ids: [item.productId],
+          content_type: "product",
+          value: item.price,
+          currency: "DZD",
+        });
 
         toast.success("Added to cart", {
           id,

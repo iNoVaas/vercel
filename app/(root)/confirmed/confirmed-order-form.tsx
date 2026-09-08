@@ -5,6 +5,7 @@ import { createOrder } from "@/actions/order-action";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Check, Loader } from "lucide-react";
+import * as pixel from "@/lib/pixel";
 
 const ConfirmOrderForm = () => {
   const router = useRouter();
@@ -24,6 +25,12 @@ const ConfirmOrderForm = () => {
       }
 
       if (res?.redirectTo) {
+        // Track Purchase event for Meta Pixel
+        pixel.event("Purchase", {
+          content_type: "product",
+          currency: "DZD",
+        });
+        
         router.push(res.redirectTo);
       }
     });
