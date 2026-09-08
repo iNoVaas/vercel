@@ -28,7 +28,6 @@ const ConfirmOrderForm = () => {
         // Track Purchase event for Meta Pixel
         pixel.event("Purchase", {
           content_type: "product",
-          currency: "DZD",
         });
         
         router.push(res.redirectTo);

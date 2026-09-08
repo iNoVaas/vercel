@@ -41,7 +41,7 @@ const AddCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
           content_name: item.name,
           content_ids: [item.productId],
           content_type: "product",
-          value: item.price,
+          value: Number(item.price).toFixed(2),
           currency: "DZD",
         });
 
