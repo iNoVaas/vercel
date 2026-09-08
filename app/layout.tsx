@@ -4,6 +4,7 @@ import "./globals.css";
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
+import { MetaPixel } from "@/components/meta-pixel";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
+        <MetaPixel />
         <Providers>
           {children}
           <Toaster
