@@ -41,8 +41,7 @@ const AddCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
           content_name: item.name,
           content_ids: [item.productId],
           content_type: "product",
-          value: Number(item.price).toFixed(2),
-          currency: "DZD",
+          value: Number(item.price),
         });
 
         toast.success("Added to cart", {

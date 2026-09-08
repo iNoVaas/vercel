@@ -21,8 +21,7 @@ const ProductDetailsClient = ({ product, cart }: ProductDetailsClientProps) => {
       content_name: product.name,
       content_ids: [product.id],
       content_type: "product",
-      value: Number(product.price).toFixed(2),
-      currency: "DZD",
+      value: Number(product.price),
     });
   }, [product]);
 
