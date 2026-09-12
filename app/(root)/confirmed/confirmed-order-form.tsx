@@ -25,11 +25,7 @@ const ConfirmOrderForm = () => {
       }
 
       if (res?.redirectTo) {
-        // Track Purchase event for Meta Pixel
-        pixel.event("Purchase", {
-          content_type: "product",
-        });
-        
+        // Redirect to order page (Purchase event will fire there)
         router.push(res.redirectTo);
       }
     });

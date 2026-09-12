@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { auth } from "@/auth";
 import MarkDeliveredButton from "@/components/ui/mark-delivered-button"; // ✅ ADD
 import type { ShippingAddress, OrderItem } from "@/types";
+import { OrderSuccessTracker } from "./order-success-tracker";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -62,6 +63,9 @@ export default async function OrderDetailsPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto max-w-6xl px-4 py-6 space-y-5">
+      {/* Track Purchase event when order page loads */}
+      <OrderSuccessTracker orderTotal={Number(order.totalPrice)} />
+      
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
