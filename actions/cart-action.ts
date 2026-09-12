@@ -207,17 +207,39 @@ export async function saveCartShippingAddress(address: ShippingAddress) {
     console.log("🔍 saveCartShippingAddress - sessionId:", sessionId);
     console.log("🔍 saveCartShippingAddress - address:", address);
     
-    if (!sessionId) throw new Error("No sessionCartId cookie found");
+    if (!sessionId) {
+      return { 
+        success: false, 
+        message: "No cart session found. Please add items to cart first.",
+        redirectTo: "/cart"
+      };
+    }
 
     const cart = await prisma.cart.findFirst({
       where: { sessionId },
       orderBy: { createdAt: "desc" },
-      select: { id: true },
+      select: { id: true, items: true },
     });
 
     console.log("🔍 saveCartShippingAddress - cart found:", cart);
 
-    if (!cart) throw new Error("Cart not found");
+    if (!cart) {
+      return { 
+        success: false, 
+        message: "Your cart has expired. Please add items again.",
+        redirectTo: "/cart"
+      };
+    }
+
+    // Check if cart has items
+    const items = Array.isArray(cart.items) ? cart.items : [];
+    if (items.length === 0) {
+      return { 
+        success: false, 
+        message: "Your cart is empty. Please add items first.",
+        redirectTo: "/cart"
+      };
+    }
 
     await prisma.cart.update({
       where: { id: cart.id },

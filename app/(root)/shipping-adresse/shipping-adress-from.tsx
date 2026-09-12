@@ -90,8 +90,15 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
         console.error("❌ Failed to save shipping address:", cartRes.message);
         toast.error("Something went wrong", {
           description: cartRes.message || "Failed saving shipping address",
-          duration: 5000, // Show for 5 seconds so you can read it
+          duration: 5000,
         });
+        
+        // If there's a redirect URL (cart expired), redirect there
+        if ((cartRes as any).redirectTo) {
+          setTimeout(() => {
+            router.push((cartRes as any).redirectTo);
+          }, 2000); // Wait 2 seconds so user can read the error
+        }
         return;
       }
 
