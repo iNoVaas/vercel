@@ -73,11 +73,17 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
     : 0;
 
   const onSubmit: SubmitHandler<ShippingFormData> = async (values) => {
+    console.log("🔍 Form submitted with values:", values);
+    
     startTransition(async () => {
       const cartRes = await saveCartShippingAddress(values);
+      console.log("🔍 saveCartShippingAddress response:", cartRes);
+      
       if (!cartRes.success) {
+        console.error("❌ Failed to save shipping address:", cartRes.message);
         toast.error("Something went wrong", {
           description: cartRes.message || "Failed saving shipping address",
+          duration: 5000, // Show for 5 seconds so you can read it
         });
         return;
       }
@@ -89,6 +95,7 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
         }
       }
 
+      console.log("✅ Redirecting to /confirmed");
       router.push("/confirmed");
     });
   };
@@ -111,6 +118,11 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          {/* Debug: Log form state */}
+          {console.log("🔍 Form errors:", form.formState.errors)}
+          {console.log("🔍 Form isValid:", form.formState.isValid)}
+          {console.log("🔍 Form isSubmitting:", form.formState.isSubmitting)}
+          
           {/* Delivery Type */}
           <FormField
             control={form.control}
