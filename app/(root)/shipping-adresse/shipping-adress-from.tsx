@@ -41,18 +41,6 @@ type ShippingFormData = z.infer<typeof shippingAddressSchema>;
 const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
   const router = useRouter();
 
-  // Track InitiateCheckout when user reaches shipping page
-  useEffect(() => {
-    pixel.event("InitiateCheckout");
-  }, []);
-
-  // Debug: Log form state changes
-  useEffect(() => {
-    console.log("🔍 Form errors:", form.formState.errors);
-    console.log("🔍 Form isValid:", form.formState.isValid);
-    console.log("🔍 Form isSubmitting:", form.formState.isSubmitting);
-  }, [form.formState]);
-
   const defaultValues = useMemo(() => {
     if (addresse) return addresse as ShippingFormData;
     return {
@@ -71,6 +59,18 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
     defaultValues,
     mode: "onSubmit",
   });
+
+  // Track InitiateCheckout when user reaches shipping page
+  useEffect(() => {
+    pixel.event("InitiateCheckout");
+  }, []);
+
+  // Debug: Log form state changes
+  useEffect(() => {
+    console.log("🔍 Form errors:", form.formState.errors);
+    console.log("🔍 Form isValid:", form.formState.isValid);
+    console.log("🔍 Form isSubmitting:", form.formState.isSubmitting);
+  }, [form.formState]);
 
   const deliveryType = form.watch("deliveryType");
   const wilaya = form.watch("wilaya");
