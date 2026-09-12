@@ -46,6 +46,13 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
     pixel.event("InitiateCheckout");
   }, []);
 
+  // Debug: Log form state changes
+  useEffect(() => {
+    console.log("🔍 Form errors:", form.formState.errors);
+    console.log("🔍 Form isValid:", form.formState.isValid);
+    console.log("🔍 Form isSubmitting:", form.formState.isSubmitting);
+  }, [form.formState]);
+
   const defaultValues = useMemo(() => {
     if (addresse) return addresse as ShippingFormData;
     return {
@@ -118,11 +125,6 @@ const ShippingForm = ({ addresse, isGuest }: ShippingFormProps) => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          {/* Debug: Log form state */}
-          {console.log("🔍 Form errors:", form.formState.errors)}
-          {console.log("🔍 Form isValid:", form.formState.isValid)}
-          {console.log("🔍 Form isSubmitting:", form.formState.isSubmitting)}
-          
           {/* Delivery Type */}
           <FormField
             control={form.control}
