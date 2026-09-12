@@ -203,6 +203,10 @@ export async function saveCartShippingAddress(address: ShippingAddress) {
   try {
     const cookieStore = await cookies();
     const sessionId = cookieStore.get("sessionCartId")?.value;
+    
+    console.log("🔍 saveCartShippingAddress - sessionId:", sessionId);
+    console.log("🔍 saveCartShippingAddress - address:", address);
+    
     if (!sessionId) throw new Error("No sessionCartId cookie found");
 
     const cart = await prisma.cart.findFirst({
@@ -211,6 +215,8 @@ export async function saveCartShippingAddress(address: ShippingAddress) {
       select: { id: true },
     });
 
+    console.log("🔍 saveCartShippingAddress - cart found:", cart);
+
     if (!cart) throw new Error("Cart not found");
 
     await prisma.cart.update({
@@ -218,10 +224,11 @@ export async function saveCartShippingAddress(address: ShippingAddress) {
       data: { shippingAddress: address },
     });
 
-    // ❌ REMOVED - Shipping address is user-specific, no need to revalidate
+    console.log("✅ Shipping address saved successfully");
 
     return { success: true };
   } catch (e) {
+    console.error("❌ saveCartShippingAddress error:", e);
     return { success: false, message: (e as Error).message };
   }
 }
